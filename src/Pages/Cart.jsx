@@ -234,7 +234,7 @@ const Container = styled.div`
     }
     .checkout{
       position: absolute;
-      top: 12rem;
+      top: 12.5rem;
       left: 46%;
       text-align: center;
       color: white;
@@ -272,7 +272,7 @@ const Container = styled.div`
     border-radius: 1rem;
     border: 15px solid white;
     @media only screen and (max-width: 600px){
-            bottom: 15rem;
+            bottom: 13rem;
           }
     &::-webkit-scrollbar{
             width: 0.2rem;
