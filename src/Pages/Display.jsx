@@ -124,7 +124,7 @@ const Container = styled.div`
     position: relative;
     .nav{
       position: absolute;
-      top: 1rem;
+      top: 2.5rem;
       right: 0.1rem;
       display: flex;
       flex-direction: column;
@@ -174,7 +174,7 @@ const Container = styled.div`
     }
     h1{
       position: absolute;
-      top: 5rem;
+      top: 7rem;
       left: 41%;
       text-align: center;
       background-color: white;
@@ -203,7 +203,7 @@ const Container = styled.div`
     border-radius: 1rem;
     border: 15px solid white;
     @media only screen and (max-width: 600px){
-            bottom: 17rem;
+            bottom: 15rem;
           }
     &::-webkit-scrollbar{
             width: 0.2rem;
