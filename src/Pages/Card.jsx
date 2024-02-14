@@ -106,8 +106,9 @@ const Container = styled.div`
   align-items: center;
   background-color: orange;
   .card{
+    margin: 0;
     width: 65%;
-    height: 65%;
+    height: 80%;
     display: flex;
     flex-wrap: wrap;
     background-color: #ffffff9d;
@@ -145,6 +146,9 @@ const Container = styled.div`
       width: 60%;
       height:100%;
       margin:0 auto;
+      @media only screen and (max-width: 600px){
+          height: 50%;
+        }
       .loader {
           margin: 10rem auto;
           width: fit-content;
