@@ -101,13 +101,16 @@ const Container = styled.div`
       list-style-type: none;
       display: flex;
       flex-direction: column;
+      align-items: center;
       width: 100%;
+      margin: 0;
+      padding: 0;
       a{
         text-decoration: none;
         color: inherit;
         li{
         margin: 0.6rem;
-        width: 90%;
+        width: 87%;
         height: 7rem;
         border: 2px solid orange;
         background-color: #ffa60065;
@@ -120,6 +123,10 @@ const Container = styled.div`
         .image{
           width: 4rem;
           height: 4rem;
+          @media only screen and (max-width: 600px){
+            width:3rem;
+            height: 3rem;
+          }
           img{
             width: 100%;
             height: 100%;
@@ -130,6 +137,9 @@ const Container = styled.div`
           h1,p{
             margin: 0;
             padding: 0;
+            @media only screen and (max-width: 600px){
+              font-size: small;
+            }
           }
           .stat{
             color: green;

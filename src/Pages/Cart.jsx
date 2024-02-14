@@ -10,13 +10,15 @@ const Cart = () => {
   const [isChecked, setIsChecked] = useState(false)
   const [order,setOrder] = useState([])
   const [loader,setLoader] = useState(true)
+  const [rel,setRel] = useState(true)
 
   const navigate = useNavigate()
 
   useEffect(()=>{
     const fetchCart = async()=>{
       try {
-        const res = await JSON.parse(localStorage.getItem('pizza-delivery-app'))
+        if(localStorage.getItem('pizza-delivery-app')){
+          const res = await JSON.parse(localStorage.getItem('pizza-delivery-app'))
         setUser(res)
         const {data} = await api.get(`/cart/${res.id}`)
         if(!data.status){
@@ -25,12 +27,25 @@ const Cart = () => {
         }
         setCart(data.data)
         setLoader(false)
+        }
+        else{
+          navigate('/login')
+        }
       } catch (error) {
         alert(error.message)
       }
     }
     fetchCart()
-  },[])
+  },[rel])
+
+  const handleLogOut=async()=>{
+    const confirmLogout = window.confirm("Are you sure you want to logout?");
+    if (confirmLogout) {
+      localStorage.removeItem('pizza-delivery-app')
+      setRel(!rel)
+      navigate('/login')
+    }
+  }
 
   const handleDelete =  async(id)=>{
     try {
@@ -103,7 +118,7 @@ const Cart = () => {
             <Link to={'/cart'}><li>Cart</li></Link>
             <Link to={'/display'}><li>Pending Orders</li></Link>
             <Link to={'/history'}><li>Order History</li></Link>
-            <Link><li>Profile</li></Link>
+            <Link><li onClick={handleLogOut} >Log Out</li></Link>
           </ul>
         </div>
           <h1>Your Cart <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg></h1>
@@ -212,6 +227,10 @@ const Container = styled.div`
       display: flex;
       align-items: center;
       justify-content: space-evenly;
+      @media only screen and (max-width: 600px){
+        left: 1rem;
+        right: 1rem
+      }
     }
     .checkout{
       position: absolute;
@@ -228,6 +247,10 @@ const Container = styled.div`
       align-items: center;
       justify-content: space-evenly;
       cursor: pointer;
+      @media only screen and (max-width: 600px){
+        left: 1rem;
+        right: 1rem
+      }
       &:hover{
         background-color: #940303;
       }
@@ -280,6 +303,8 @@ const Container = styled.div`
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+      margin: 0;
+      padding: 0;
       a{
         text-decoration: none;
         color: black;
@@ -293,11 +318,18 @@ const Container = styled.div`
           margin: 1rem;
           background-color: #ffa6006e;
           border-radius: 0.5rem;
+          @media only screen and (max-width: 600px){
+            width: 140px;
+            height: 170px;
+          }
           .image{
             width: 100%;
             height: 80%;
             border-radius: 0.5rem;
             position: relative;
+            @media only screen and (max-width: 600px){
+              height: 70%;
+            }
             .trash{
               position: absolute;
               top: 12px;
@@ -324,6 +356,10 @@ const Container = styled.div`
               margin-top: 4px;
               padding: 0;
               text-align: center;
+              @media only screen and (max-width: 600px){
+                margin-top: 0;
+                font-size: small;
+              }
             }
           }
         }

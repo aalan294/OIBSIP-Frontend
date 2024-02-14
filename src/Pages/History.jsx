@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 import api from '../API/axios'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import bimage from '../Assets/food-pizza-wallpaper-preview.jpg'
 import recieve from '../Assets/received-160122_1280.png'
 import baking from '../Assets/pngtree-bakery-icon-for-your-project-png-image_1541423.jpg'
@@ -13,11 +13,15 @@ const History = () => {
   const [user,setUser] = useState(undefined)
   const [isChecked, setIsChecked] = useState(false)
   const [loader,setLoader] = useState(true)
+  const [rel,setRel] = useState(true)
+
+  const navigate = useNavigate()
 
   useEffect(()=>{
     const fetchOrders = async()=>{
       try {
-        const res = await JSON.parse(localStorage.getItem('pizza-delivery-app'))
+        if(localStorage.getItem('pizza-delivery-app')){
+          const res = await JSON.parse(localStorage.getItem('pizza-delivery-app'))
         setUser(res)
         const {data} = await api.get(`/orders/${res.id}`)
         if(!data.status){
@@ -26,12 +30,16 @@ const History = () => {
         }
         setLoader(false)
         setOrders(data.orders)
+        }
+        else{
+          navigate('/login')
+        }
       } catch (error) {
         alert(error.message)
       }
     }
     fetchOrders()
-  },[])
+  },[rel])
     const statusImages = {
       'received': recieve,
       'in kitchen': baking,
@@ -49,6 +57,14 @@ const History = () => {
     }
 
 
+    const handleLogOut=async()=>{
+      const confirmLogout = window.confirm("Are you sure you want to logout?");
+      if (confirmLogout) {
+        localStorage.removeItem('pizza-delivery-app')
+        setRel(!rel)
+        navigate('/login')
+      }
+    }
   return (
     <Container>
       <div className="bimage">
@@ -64,7 +80,7 @@ const History = () => {
             <Link to={'/cart'}><li>Cart</li></Link>
             <Link to={'/display'}><li>Pending Orders</li></Link>
             <Link to={'/history'}><li>Order History</li></Link>
-            <Link><li>Profile</li></Link>
+            <Link><li onClick={handleLogOut} >Log Out</li></Link>
           </ul>
         </div>
           <h1>Order History <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></h1>
@@ -166,6 +182,10 @@ const Container = styled.div`
       background-color: white;
       padding: 0.4rem 1rem;
       border-radius: 1rem;
+      @media only screen and (max-width: 600px){
+        left: 1rem;
+        right: 1rem
+      }
     }
     img{
       width: 100%;
@@ -184,6 +204,9 @@ const Container = styled.div`
     margin: 0 auto;
     border-radius: 1rem;
     border: 15px solid white;
+    @media only screen and (max-width: 600px){
+            bottom: 17rem;
+          }
     &::-webkit-scrollbar{
             width: 0.2rem;
             &-thumb{
@@ -215,7 +238,10 @@ const Container = styled.div`
       list-style-type: none;
       display: flex;
       flex-direction: column;
+      align-items: center;
       width: 100%;
+      margin: 0;
+      padding: 0;
       li{
         margin: 0.6rem;
         width: 90%;
@@ -231,16 +257,26 @@ const Container = styled.div`
         .image{
           width: 4rem;
           height: 4rem;
+          border-radius: 50%;
+          @media only screen and (max-width: 600px){
+            width:3rem;
+            height: 3rem;
+            border-radius: 50%;
+          }
           img{
             width: 100%;
             height: 100%;
             object-fit: cover;
+            border-radius: 50%;
           }
         }
         .det{
           h1,p{
             margin: 0;
             padding: 0;
+            @media only screen and (max-width: 600px){
+              font-size: small;
+            }
           }
           .stat{
             color: green;

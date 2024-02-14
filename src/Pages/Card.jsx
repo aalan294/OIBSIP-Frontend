@@ -113,6 +113,11 @@ const Container = styled.div`
     background-color: #ffffff9d;
     border-radius: 1.5rem;
     position: relative;
+    @media only screen and (max-width: 600px){
+      width: 80%;
+      justify-content: center;
+      padding: 1rem;
+    }
     a{
       position:absolute;
       right: 1rem;
@@ -125,6 +130,10 @@ const Container = styled.div`
       align-items: center;
       padding-left: 1rem;
       border-radius: 1rem;
+      margin-top: 2rem;
+      @media only screen and (max-width: 600px){
+        width: 60%;
+      }
       img{
         width: 100%;
         height:auto;
@@ -161,13 +170,18 @@ const Container = styled.div`
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 1rem;
+        @media only screen and (max-width: 600px){
+          padding: 0;
+        }
         input{
           background-color: orange;
           border-radius: 4px;
           width: 4rem;
           text-align: center;
           font-size: larger;
+          @media only screen and (max-width: 600px){
+            width: 2.5rem;
+          }
         }
         button{
           align-self: flex-end;
@@ -178,11 +192,20 @@ const Container = styled.div`
           border: none;
           background-color: #6f2e2ec3;
           color: white;
+          @media only screen and (max-width: 600px){
+            align-self: center;
+            margin: 0;
+          }
           &:hover{
             box-shadow: 5px 5px 5px brown;
           }
         }
         .choose{
+          @media only screen and (max-width: 600px){
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+          }
           select{
             margin: 0.5rem;
             background-color: orange;

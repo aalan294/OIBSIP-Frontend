@@ -111,11 +111,15 @@ const Container = styled.div`
     width: 75%;
     height: 75%;
     border: 1px solid orange;
+    border-radius: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: #ffa60057;
     position: relative;
+    @media only screen and (max-width: 600px){
+              width: 90%;
+            }
     a{
       position:absolute;
       right: 1rem;
@@ -167,8 +171,11 @@ const Container = styled.div`
       list-style-type: none;
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
       height: 70%;
       overflow-y: scroll;
+      margin: 0;
+      padding: 0;
       &::-webkit-scrollbar{
             width: 0.2rem;
             &-thumb{
@@ -182,6 +189,7 @@ const Container = styled.div`
         padding: 2rem;
         margin: 2rem;
         background-color: white;
+        border-radius: 1rem;
         h4{
           text-align: center;
         }

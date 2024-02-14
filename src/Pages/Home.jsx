@@ -8,6 +8,7 @@ const Home = ({currentuser,setCurrentuser,menu,setMenu}) => {
 
   const [isChecked, setIsChecked] = useState(false)
   const [loader,setLoader] = useState(true)
+  const [rel,setRel] = useState(true)
 
   const navigate = useNavigate()
   useEffect(()=>{
@@ -22,7 +23,7 @@ const Home = ({currentuser,setCurrentuser,menu,setMenu}) => {
       navigate('/login')
     }
 
-  },[])
+  },[rel])
   useEffect(()=>{
     const fetchMenu =async()=>{
       try {
@@ -42,6 +43,15 @@ const Home = ({currentuser,setCurrentuser,menu,setMenu}) => {
     fetchMenu()
   },[])
 
+  const handleLogOut=async()=>{
+    const confirmLogout = window.confirm("Are you sure you want to logout?");
+    if (confirmLogout) {
+      localStorage.removeItem('pizza-delivery-app')
+      setRel(!rel)
+      navigate('/login')
+    }
+  }
+
   return (
     <Container>
       <div className="bimage">
@@ -57,7 +67,7 @@ const Home = ({currentuser,setCurrentuser,menu,setMenu}) => {
             <Link to={'/cart'}><li>Cart</li></Link>
             <Link to={'/display'}><li>Pending Orders</li></Link>
             <Link to={'/history'}><li>Order History</li></Link>
-            <Link><li>Profile</li></Link>
+            <Link><li onClick={handleLogOut} >Log Out</li></Link>
           </ul>
         </div>
         <h1>Pizza Delivery App</h1>
@@ -158,6 +168,10 @@ const Container = styled.div`
       background-color: white;
       padding: 0.4rem 1rem;
       border-radius: 1rem;
+      @media only screen and (max-width: 600px){
+        left: 1rem;
+        right: 1rem
+      }
     }
     img{
       width: 100%;
@@ -171,10 +185,14 @@ const Container = styled.div`
     width: 90%;
     height: 60vh;
     overflow-y: scroll;
+    overflow-x:hidden;
     background-color: white;
     margin: 0 auto;
     border-radius: 1rem;
     border: 15px solid white;
+    @media only screen and (max-width: 600px){
+            bottom: 17rem;
+          }
     &::-webkit-scrollbar{
             width: 0.2rem;
             &-thumb{
@@ -203,6 +221,8 @@ const Container = styled.div`
           }
         }
     ul{
+      margin: 0;
+      padding: 0;
       list-style-type: none;
       display: flex;
       flex-wrap: wrap;
@@ -217,13 +237,20 @@ const Container = styled.div`
           flex-direction: column;
           align-items: center;
           border: 1px solid orange;
-          margin: 1rem;
+          margin: 0.5rem;
           background-color: #ffa6006e;
           border-radius: 0.5rem;
+          @media only screen and (max-width: 600px){
+            width: 140px;
+            height: 170px;
+          }
           .image{
             width: 100%;
             height: 80%;
             border-radius: 0.5rem;
+            @media only screen and (max-width: 600px){
+              height: 70%;
+            }
             img{
               width: 100%;
               height:100%;
@@ -238,6 +265,10 @@ const Container = styled.div`
               margin-top: 4px;
               padding: 0;
               text-align: center;
+              @media only screen and (max-width: 600px){
+                margin-top: 0;
+                font-size: small;
+              }
             }
           }
         }
