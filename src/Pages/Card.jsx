@@ -103,10 +103,9 @@ const Container = styled.div`
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
   background-color: orange;
   .card{
-    margin: 0;
+    margin: 1rem;
     width: 65%;
     height: 80%;
     display: flex;
