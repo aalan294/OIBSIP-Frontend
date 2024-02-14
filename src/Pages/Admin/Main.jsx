@@ -73,7 +73,7 @@ const Container = styled.div`
     }
     .nav{
       position: absolute;
-      top: 11rem;
+      top: 9.2rem;
       left: 36%;
       @media only screen and (max-width: 600px){
               left: 1rem;
@@ -131,7 +131,7 @@ const Container = styled.div`
     border-radius: 1rem;
     border: 15px solid white;
     @media only screen and (max-width: 600px){
-              bottom: 15rem;
+              bottom: 14rem;
             }
     &::-webkit-scrollbar{
             width: 0.2rem;
