@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {BrowserRouter,Routes,Route} from 'react-router-dom'
+import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './Pages/Home'
 import Login from './Pages/Login'
 import Register from './Pages/Register'
@@ -16,7 +16,7 @@ const App = () => {
   const [currentuser,setCurrentuser] = useState(undefined)
   const [menu,setMenu] = useState([])
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
         <Route path='/' element={<Home currentuser = {currentuser} setCurrentuser={setCurrentuser} menu={menu} setMenu={setMenu} />}/>
         <Route path='/login' element={<Login currentuser = {currentuser} setCurrentuser={setCurrentuser}/>}/>
@@ -30,7 +30,7 @@ const App = () => {
         <Route path='/main' element={<Main/>}/>
         <Route path='/admincard/:id' element={<AdminCard/>}/>
       </Routes>
-    </BrowserRouter>
+    </Router>
   )
 }
 
