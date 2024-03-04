@@ -64,7 +64,49 @@ const Cart = () => {
       alert(error.message)
     }
   }
-
+  const handlePayment = async () => {
+    try {
+      let amountInPaisa = cart.reduce((total, item) => total + item.price, 0);
+      
+      const response = await api.post("/apis/orders",{amount:amountInPaisa});
+      const { data } = response.data;
+      console.log(data)
+  
+      const options = {
+        key: "rzp_test_epPmzNozAIcJcC", 
+        amount: data.amount,
+        currency: "INR",
+        name: "Pizza-App",
+        description: "Purchase Description",
+        order_id: data.id,
+        handler: async (response) => {
+          try {
+            const verifyResponse = await api.post("/apis/verify", {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            });
+            if(verifyResponse.status === 200) {
+              console.log(verifyResponse.data.message);
+              handleOrder();
+            }
+          } catch (error) {
+            console.error("Error frontrnd verifying payment:", error);
+          }
+        },
+        theme: {
+          color: "#F37254",
+        },
+      };
+      
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+      
+    } catch (error) {
+      console.error("Error frontrnd initiating payment:", error);
+    }
+  };
+  
   const handleOrder = async()=>{
     try {
       setLoader(true)
@@ -122,7 +164,7 @@ const Cart = () => {
           </ul>
         </div>
           <h1>Your Cart <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg></h1>
-          <button className='checkout' onClick={handleOrder}>Checkout Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></button>
+          <button className='checkout' onClick={handlePayment}>Checkout Now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></button>
         <img src={bimage} alt="" />
       </div>
       <div className="menu-list">
