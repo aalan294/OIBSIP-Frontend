@@ -111,7 +111,6 @@ const Container = styled.div`
         li{
         margin: 0.6rem;
         width: 87%;
-        height: 7rem;
         border: 2px solid orange;
         background-color: #ffa60065;
         color: #bc7c04;
